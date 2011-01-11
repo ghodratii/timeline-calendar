@@ -1,4 +1,4 @@
-=== Plugin Name ===
+=== Timeline Calendar ===
 Contributors: omidkorat
 Tags: timeline, calendar, event, widget
 Requires at least: 3
