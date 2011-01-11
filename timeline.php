@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: Timeline
+Plugin Name: Timeline Calendar
 Plugin URI: 
 Description: Make your own timeline calendar with many options!
-Version: 1.0
+Version: 1.0.1
 Author: Omid Korat
 Author URI: http://dementor.ir/
 */
@@ -61,7 +61,7 @@ add_filter( 'plugin_row_meta', 'set_plugin_meta', 10, 2 );
 function timeline_menu()
 {
     add_menu_page(__('Timeline', 'timeline'), __('Timeline', 'timeline'),
-        'manage_options', 'timeline', 'timeline_handle', plugins_url('timeline/icon.png'));
+        'manage_options', 'timeline', 'timeline_handle', plugins_url('timeline-calendar/icon.png'));
     add_submenu_page('timeline', __('Events', 'timeline'), __('Events', 'timeline'),
         'manage_options', 'events', 'events_page');
     add_submenu_page('timeline', __('Uninstall', 'timeline'), __('Uninstall', 'timeline'),
@@ -404,5 +404,5 @@ function uninstall_page()
 
 add_action('widgets_init', create_function('', 'return register_widget("TimelinecalWidget");'));
 add_action('admin_menu', 'timeline_menu');
-load_plugin_textdomain('timeline', "/wp-content/plugins/timeline/");
+load_plugin_textdomain('timeline', "/wp-content/plugins/timeline-calendar/");
 ?>
