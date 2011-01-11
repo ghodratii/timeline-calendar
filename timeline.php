@@ -3,7 +3,7 @@
 Plugin Name: Timeline
 Plugin URI: 
 Description: Make your own timeline calendar with many options!
-Version: 1
+Version: 1.0
 Author: Omid Korat
 Author URI: http://dementor.ir/
 */
