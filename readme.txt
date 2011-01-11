@@ -24,19 +24,24 @@ This plugin has been made based on standard and Hijri Shamsi calendar.
 
 == Frequently Asked Questions ==
 
+= How can I add Timeline Calendar into my page? =
+
+Place `<?php if (function_exists('mytimeline')): mytimeline(); endif; ?>` in your page template.
+
+= Where is the settings page for Timeline Calendar? =
+
+Log into WordPress and go to Timeline\Timeline.
 
 
 == Screenshots ==
 
+1. Settings page
+2. Add events
+3. Widget in English
+4. Widget in Persian
 
 
 == Changelog ==
 
-
-
-== Arbitrary section ==
-
-
-
-== A brief Markdown Example ==
-
+= 1.0 =
+* First release.
