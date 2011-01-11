@@ -20,7 +20,7 @@ This plugin has been made based on standard and Hijri Shamsi calendar.
 
 1. Upload plugin files to the `/wp-content/plugins/timeline-calendar` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Place `<?php mytimeline(); ?>` in your templates
+1. Place `<?php if (function_exists('mytimeline')): mytimeline(); endif; ?>` in your templates or enable 'Timeline Calendar' from your widgets.
 
 == Frequently Asked Questions ==
 
