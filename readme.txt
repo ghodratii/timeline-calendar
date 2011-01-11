@@ -1,5 +1,6 @@
 === Timeline Calendar ===
 Contributors: omidkorat
+Donate link: http://www.dementor.ir
 Tags: timeline, calendar, event, widget
 Requires at least: 3
 Tested up to: 3.0.4
@@ -55,3 +56,8 @@ Log into WordPress and go to Timeline\Timeline.
 
 = 1.0 =
 * First release.
+
+== Upgrade Notice ==
+
+= 1.0.1 =
+* Fix icon and Persian language.
