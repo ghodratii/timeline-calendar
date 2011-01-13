@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Timeline\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-07 21:32+0330\n"
-"PO-Revision-Date: 2011-01-07 21:32+0330\n"
+"POT-Creation-Date: 2011-01-13 19:11+0330\n"
+"PO-Revision-Date: 2011-01-13 19:12+0330\n"
 "Last-Translator: Omid <omidkorat@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -13,186 +13,196 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: timeline.php:21
+#: timeline.php:20
 msgid "Nothing happened today!"
 msgstr "اتفاقی برای این روز ثبت نشده است!"
 
-#: timeline.php:23
+#: timeline.php:22
 msgid "Yesterday"
 msgstr "دیروز"
 
-#: timeline.php:24
+#: timeline.php:23
 msgid "Today"
 msgstr "امروز"
 
-#: timeline.php:25
+#: timeline.php:24
 msgid "Tomorrow"
 msgstr "فردا"
 
-#: timeline.php:53
-msgid "Settings"
-msgstr "تنظیمات"
-
-#: timeline.php:63
-#: timeline.php:108
+#: timeline.php:51
+#: timeline.php:100
+#: timeline.php:148
 #: widget.php:7
 msgid "Timeline"
 msgstr "تقویم زمان بندی"
 
-#: timeline.php:65
+#: timeline.php:77
+#: widget.php:33
+msgid "Title:"
+msgstr "عنوان:"
+
+#: timeline.php:90
+msgid "Settings"
+msgstr "تنظیمات"
+
+#: timeline.php:102
 msgid "Events"
 msgstr "اتفاقات"
 
-#: timeline.php:67
+#: timeline.php:104
 msgid "Uninstall"
 msgstr "حذف"
 
-#: timeline.php:88
+#: timeline.php:127
 msgid "Settings saved."
 msgstr "تنظیمات ذخیره شدند."
 
-#: timeline.php:100
+#: timeline.php:140
 msgid "Settings restored."
 msgstr "تنظیمات بازگشتند."
 
-#: timeline.php:110
+#: timeline.php:150
 msgid "Which days should be displayed?"
 msgstr "چه روزهایی نمایش داده شوند؟"
 
-#: timeline.php:114
+#: timeline.php:154
 msgid "Only today"
 msgstr "فقط امروز"
 
-#: timeline.php:117
+#: timeline.php:157
 msgid "Yesterday, today and tomorrow"
 msgstr "دیروز، امروز و فردا"
 
-#: timeline.php:119
-msgid "Use Iranian (Solar Hejri) calendar."
+#: timeline.php:159
+msgid "Use Iranian (Jalali) calendar."
 msgstr "استفاده از تقویم هجری شمسی."
 
-#: timeline.php:119
+#: timeline.php:159
 msgid "Your events actual date will not corrupt."
 msgstr "تاریخ اتفاقاتی که وارد کرده اید آسیب نمی بیند."
 
-#: timeline.php:120
+#: timeline.php:160
 msgid "In order to use this feature, you need to install the <a href=\"http://wordpress.org/extend/plugins/wp-jalali/\">wp-jalali</a> plugin."
 msgstr "جهت استفاده از این قابلیت، اول باید افزونه ی <a href=\"http://wordpress.org/extend/plugins/wp-jalali/\">wp-jalali</a> را نصب کنید."
 
-#: timeline.php:121
+#: timeline.php:161
 msgid "Text when no records found:"
 msgstr "متن جهت نمایش هنگام عدم وجود اتفاق در روز:"
 
-#: timeline.php:123
+#: timeline.php:163
 msgid "Hide empty days."
 msgstr "مخفی کردن روزهای خالی."
 
-#: timeline.php:124
+#: timeline.php:164
 msgid "Yesterday template:"
 msgstr "قالب دیروز:"
 
-#: timeline.php:126
+#: timeline.php:166
 msgid "Today template:"
 msgstr "قالب امروز:"
 
-#: timeline.php:128
+#: timeline.php:168
 msgid "Tomorrow template:"
 msgstr "قالب فردا:"
 
-#: timeline.php:131
+#: timeline.php:170
+msgid "Convert line breaks to paragraph."
+msgstr "تبدیل سرخط رفتن به پاراگراف جدید."
+
+#: timeline.php:172
 msgid "Save"
 msgstr "ذخیره"
 
-#: timeline.php:135
+#: timeline.php:176
 msgid "Template variables:"
 msgstr "داده های قالب:"
 
-#: timeline.php:136
+#: timeline.php:177
 msgid "Display the day."
 msgstr "نمایش روز."
 
-#: timeline.php:137
+#: timeline.php:178
 msgid "Display the full textual representation of the month, such as January or March."
 msgstr "نمایش نام کامل ماه، مانند فروردین یا بهمن."
 
-#: timeline.php:138
+#: timeline.php:179
 msgid "Display the event of the day."
 msgstr "نمایش اتفاق روز."
 
-#: timeline.php:141
+#: timeline.php:182
 msgid "Restore Defaults"
 msgstr "تنظیمات پیش فرض"
 
-#: timeline.php:141
+#: timeline.php:182
 msgid "Whould you like to reset settings?"
-msgstr "آیا مطمئن هستید که می خواهید تنظیمات را به حالت یش فرض بازگردانید؟"
+msgstr "آیا مطمئن هستید که می خواهید تنظیمات را به حالت پیش فرض بازگردانید؟"
 
-#: timeline.php:186
+#: timeline.php:227
 msgid "added successfully!"
 msgstr "با موفقیت اضافه شد!"
 
-#: timeline.php:188
+#: timeline.php:229
 msgid "You already have a event for this day and month!"
 msgstr "اتفاق این روز را قبلا نوشته بودید!"
 
-#: timeline.php:201
+#: timeline.php:242
 msgid "Edited!"
 msgstr "ویرایش شد!"
 
-#: timeline.php:218
+#: timeline.php:259
 msgid "Deleted!"
 msgstr "حذف شد!"
 
-#: timeline.php:234
-#: timeline.php:273
-#: timeline.php:307
+#: timeline.php:275
+#: timeline.php:314
+#: timeline.php:348
 msgid "Edit"
 msgstr "ویرایش"
 
-#: timeline.php:236
-#: timeline.php:275
+#: timeline.php:277
+#: timeline.php:316
 msgid "Add"
 msgstr "افزودن"
 
-#: timeline.php:238
+#: timeline.php:279
 msgid "On:"
 msgstr "در:"
 
-#: timeline.php:264
+#: timeline.php:305
 msgid "This event happens:"
 msgstr "این اتفاق افتاده است:"
 
-#: timeline.php:265
+#: timeline.php:306
 msgid "You can use HTML codes."
 msgstr "می توانید از کدهای HTML استفاده کنید."
 
-#: timeline.php:276
-#: timeline.php:308
+#: timeline.php:317
+#: timeline.php:349
 msgid "Delete"
 msgstr "حذف"
 
-#: timeline.php:276
-#: timeline.php:308
+#: timeline.php:317
+#: timeline.php:349
 msgid "Are you sure?"
 msgstr "آیا مطمئن هستید؟"
 
-#: timeline.php:276
+#: timeline.php:317
 msgid "Cancel"
 msgstr "انصراف"
 
-#: timeline.php:286
+#: timeline.php:327
 msgid "Date"
 msgstr "تاریخ"
 
-#: timeline.php:288
+#: timeline.php:329
 msgid "Event"
 msgstr "اتفاق"
 
-#: timeline.php:290
+#: timeline.php:331
 msgid "Actions"
 msgstr "عملیات"
 
-#: timeline.php:312
+#: timeline.php:353
 msgid "No Events Found"
 msgstr "اتفاقی یافت نشد"
 
@@ -216,8 +226,4 @@ msgstr "تمام داده ها حذف شد."
 #: uninstall.php:22
 msgid "Now you have to deactivate the plugin, otherwise table and settings will be create again upon entering Timeline pages."
 msgstr "حالا باید افزونه را غیرفعال کنید، در غیر این صورت به محض ورود به هریک از صفحات مربوط به تقویم زمان بندی، داده های آن از اول ساخته می شوند."
-
-#: widget.php:33
-msgid "Title:"
-msgstr "عنوان:"
 

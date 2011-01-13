@@ -4,7 +4,7 @@ Donate link: http://www.dementor.ir
 Tags: timeline, calendar, event, widget
 Requires at least: 3
 Tested up to: 3.0.4
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 
 A plugin for make your own timeline calendar with lots of options.
 
@@ -51,6 +51,11 @@ Log into WordPress and go to Timeline\Timeline.
 
 == Changelog ==
 
+= 1.0.2 =
+* Added an option for converting line breaks to paragraph.
+* Fix removing files after deactivating.
+* Translations for Persian and English have been updated.
+
 = 1.0.1 =
 * Fix icon and Persian language.
 
@@ -59,5 +64,7 @@ Log into WordPress and go to Timeline\Timeline.
 
 == Upgrade Notice ==
 
-= 1.0.1 =
-* Fix icon and Persian language.
+= 1.0.2 =
+* Added an option for converting line breaks to paragraph.
+* Fix removing files after deactivating.
+* Translations for Persian and English have been updated.

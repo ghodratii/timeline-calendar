@@ -3,7 +3,7 @@
 Plugin Name: Timeline Calendar
 Plugin URI: 
 Description: Make your own timeline calendar with many options!
-Version: 1.0.1
+Version: 1.0.2
 Author: Omid Korat
 Author URI: http://dementor.ir/
 */
@@ -11,7 +11,6 @@ Author URI: http://dementor.ir/
 
 //DEFAULTS
 define("TABLE_NAME", $wpdb->prefix . "timeline");
-require_once('widget.php');
 $gmonth = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 $jmonth = array('فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر',
             'آبان', 'آذر', 'دی', 'بهمن', 'اسفند');
@@ -23,6 +22,7 @@ function checktimeline(){
     if (get_option('timeline_formaty') == '') update_option('timeline_formaty', '<div><strong>%day% %month% ('.__('Yesterday', 'timeline').')</strong>: %event%</div>');
     if (get_option('timeline_format') == '') update_option('timeline_format', '<div><strong>%day% %month% ('.__('Today', 'timeline').')</strong>: %event%</div>');
     if (get_option('timeline_formatt') == '') update_option('timeline_formatt', '<div><strong>%day% %month% ('.__('Tomorrow', 'timeline').')</strong>: %event%</div>');
+    if (get_option('timeline_break') == '') update_option('timeline_break', '1');
     if (get_option('timeline_days') == '') update_option('timeline_days', '2');
     if (checkjalali() and WPLANG == 'fa_IR') { if (get_option('timeline_jalali') == '') update_option('timeline_jalali', '1'); }
 }
@@ -42,6 +42,43 @@ function checkjalali($plugin = false){
     } else {
         return false;
     }
+}
+
+class TimelinecalWidget extends WP_Widget
+{
+    function TimelinecalWidget()
+    {
+        parent::WP_Widget(false, $name = __('Timeline', 'timeline'));
+    }
+
+    function widget($args, $instance)
+    {
+        extract($args);
+        $title = apply_filters('widget_title', $instance['title']);
+        echo $before_widget;
+        if ($title)
+            echo $before_title . $title . $after_title;
+        mytimeline();
+        echo $after_widget;
+    }
+
+    function update($new_instance, $old_instance)
+    {
+        $instance = $old_instance;
+        $instance['title'] = strip_tags($new_instance['title']);
+        return $instance;
+    }
+
+    function form($instance)
+    {
+        $title = esc_attr($instance['title']); ?>
+            <p><label for="<?php
+
+        echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></label></p>
+        <?php
+
+    }
+
 }
 
 function set_plugin_meta($links, $file) {
@@ -78,9 +115,11 @@ function timeline_handle()
         if (isset($_POST['timeline_config'])) {
             update_option('timeline_days', $_POST['days']);
             if ($_POST['empty'] != '') { update_option('timeline_empty', $_POST['empty']); }
+            update_option('timeline_break', $_POST['break']);
             update_option('timeline_hidempty', $_POST['hidempty']);
             update_option('timeline_jalali', $_POST['jalali']);
             if ($_POST['jalali'] == '') update_option('timeline_jalali', '0');
+            if ($_POST['break'] == '') update_option('timeline_break', '0');
             if ($_POST['formaty'] != '') update_option('timeline_formaty', $_POST['formaty']);
             if ($_POST['format'] != '') update_option('timeline_format', $_POST['format']);
             if ($_POST['formatt'] != '') update_option('timeline_formatt', $_POST['formatt']);
@@ -93,6 +132,7 @@ function timeline_handle()
             update_option('timeline_formaty', '');
             update_option('timeline_format', '');
             update_option('timeline_formatt', '');
+            update_option('timeline_break', '');
             if (!checkjalali() or WPLANG != 'fa_IR') { update_option('timeline_jalali', ''); } else {
             update_option('timeline_jalali', '1');
             }
@@ -116,7 +156,7 @@ function timeline_handle()
         echo ' selected="selected"';
     } ?>><?php echo __('Yesterday, today and tomorrow', 'timeline'); ?></option>
 	</select></p>
-    <p><label<?php if (!checkjalali(true)) echo ' style="color: gray;"'; ?>><input<?php if (!checkjalali(true)) { echo ' disabled="disabled"'; } else { if (get_option('timeline_jalali') == '1') { echo ' checked="checked"'; } } ?> name="jalali" type="checkbox" value="1" />&nbsp;<?php echo __('Use Iranian (Solar Hejri) calendar.', 'timeline'); ?></label>&nbsp;<small style="font-style: italic;<?php if (!checkjalali(true)) echo ' color: gray;';?>">(<?php echo __('Your events actual date will not corrupt.', 'timeline'); ?>)</small></p>
+    <p><label<?php if (!checkjalali(true)) echo ' style="color: gray;"'; ?>><input<?php if (!checkjalali(true)) { echo ' disabled="disabled"'; } else { if (get_option('timeline_jalali') == '1') { echo ' checked="checked"'; } } ?> name="jalali" type="checkbox" value="1" />&nbsp;<?php echo __('Use Iranian (Jalali) calendar.', 'timeline'); ?></label>&nbsp;<small style="font-style: italic;<?php if (!checkjalali(true)) echo ' color: gray;';?>">(<?php echo __('Your events actual date will not corrupt.', 'timeline'); ?>)</small></p>
     <?php if (!checkjalali(true)) echo '<p><small>'.__('In order to use this feature, you need to install the <a href="http://wordpress.org/extend/plugins/wp-jalali/">wp-jalali</a> plugin.', 'timeline').'</small></p>'; ?>
 	<p><?php echo __('Text when no records found:', 'timeline'); ?></p>
 	<input name="empty" style="width: 400px" type="text" value="<?php  echo htmlspecialchars(stripslashes(get_option('timeline_empty'))); ?>" />
@@ -127,6 +167,7 @@ function timeline_handle()
 	<input name="format" style="width: 400px" type="text" value="<?php echo htmlspecialchars(stripslashes(get_option('timeline_format'))); ?>" dir="ltr" />
     <p><?php echo __('Tomorrow template:', 'timeline'); ?></p>
 	<input name="formatt" style="width: 400px" type="text" value="<?php echo htmlspecialchars(stripslashes(get_option('timeline_formatt'))); ?>" dir="ltr" />
+    <p><label><input <?php if (get_option('timeline_break') == '1') { echo 'checked="checked"'; } ?> name="break" type="checkbox" value="1" />&nbsp;<?php echo __('Convert line breaks to paragraph.', 'timeline'); ?></label></p>
     <input type="hidden" id="timeline_config" name="timeline_config" />
     <p><input name="submit" type="submit" value="<?php echo __('Save', 'timeline'); ?>" class="button-primary" /></p>
 <?php wp_nonce_field('timelinecal'); ?>
@@ -392,6 +433,9 @@ function maketimeline($day = 'cycle', $month = 'cycle', $format = '', $empty = '
         }
     } else {
         $format = str_replace("%event%", stripslashes($load->event), $format);
+        if (get_option('timeline_break') == '1') {
+           $format = str_replace("\n", "<br />", $format);
+        }
         echo $format;
     }
     
@@ -399,7 +443,7 @@ function maketimeline($day = 'cycle', $month = 'cycle', $format = '', $empty = '
 
 function uninstall_page()
 {
-    require_once('uninstall.php');
+    require_once('tcuninstall.php');
 }
 
 add_action('widgets_init', create_function('', 'return register_widget("TimelinecalWidget");'));
