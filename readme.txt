@@ -68,7 +68,6 @@ Log into WordPress and go to Timeline\Timeline.
 
 == Upgrade Notice ==
 
-= 1.0.2 =
-* Added an option for converting line breaks to paragraph.
-* Fix removing files after deactivating.
-* Translations for Persian and English have been updated.
+= 1.0.3 =
+* Added an option for displaying an excerpt instead of full event text.
+* Added an option for specify character  limit for excerpt.
