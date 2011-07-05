@@ -3,7 +3,7 @@
 Plugin Name: Timeline Calendar
 Plugin URI: 
 Description: Make your own timeline calendar with many options!
-Version: 1.0.2
+Version: 1.0.3
 Author: Omid Korat
 Author URI: http://dementor.ir/
 */
@@ -19,6 +19,8 @@ $jmonth = array('فروردین', 'اردیبهشت', 'خرداد', 'تیر', '�
 function checktimeline(){
     if (get_option('timeline_empty') == '') update_option('timeline_empty', __('Nothing happened today!', 'timeline'));
     if (get_option('timeline_hidempty') == '') update_option('timeline_hidempty', '');
+    if (get_option('timeline_excerpt') == '') update_option('timeline_excerpt', '');
+    if (get_option('timeline_excerptch') == '') update_option('timeline_excerptch', '100');
     if (get_option('timeline_formaty') == '') update_option('timeline_formaty', '<div><strong>%day% %month% ('.__('Yesterday', 'timeline').')</strong>: %event%</div>');
     if (get_option('timeline_format') == '') update_option('timeline_format', '<div><strong>%day% %month% ('.__('Today', 'timeline').')</strong>: %event%</div>');
     if (get_option('timeline_formatt') == '') update_option('timeline_formatt', '<div><strong>%day% %month% ('.__('Tomorrow', 'timeline').')</strong>: %event%</div>');
@@ -117,7 +119,9 @@ function timeline_handle()
             if ($_POST['empty'] != '') { update_option('timeline_empty', $_POST['empty']); }
             update_option('timeline_break', $_POST['break']);
             update_option('timeline_hidempty', $_POST['hidempty']);
+            update_option('timeline_excerpt', $_POST['excerpt']);
             update_option('timeline_jalali', $_POST['jalali']);
+            if(is_numeric($_POST['excerptch'])) update_option('timeline_excerptch', $_POST['excerptch']);
             if ($_POST['jalali'] == '') update_option('timeline_jalali', '0');
             if ($_POST['break'] == '') update_option('timeline_break', '0');
             if ($_POST['formaty'] != '') update_option('timeline_formaty', $_POST['formaty']);
@@ -133,6 +137,8 @@ function timeline_handle()
             update_option('timeline_format', '');
             update_option('timeline_formatt', '');
             update_option('timeline_break', '');
+            update_option('timeline_excerpt', '');
+            update_option('timeline_excerptch', '100');
             if (!checkjalali() or WPLANG != 'fa_IR') { update_option('timeline_jalali', ''); } else {
             update_option('timeline_jalali', '1');
             }
@@ -161,6 +167,8 @@ function timeline_handle()
 	<p><?php echo __('Text when no records found:', 'timeline'); ?></p>
 	<input name="empty" style="width: 400px" type="text" value="<?php  echo htmlspecialchars(stripslashes(get_option('timeline_empty'))); ?>" />
     <p><label><input <?php if (get_option('timeline_hidempty') == '0') { echo 'checked="checked"'; } ?> name="hidempty" type="checkbox" value="0" />&nbsp;<?php echo __('Hide empty days.', 'timeline'); ?></label></p>
+    <p><label><input <?php if (get_option('timeline_excerpt') == '1') { echo 'checked="checked"'; } ?> name="excerpt" type="checkbox" value="1" />&nbsp;<?php echo __('Display an excerpt instead of full event text.', 'timeline'); ?></label></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo __('Character limit', 'timeline'); ?>: <input name="excerptch" style="width: 50px" type="text" value="<?php echo htmlspecialchars(stripslashes(get_option('timeline_excerptch'))); ?>" dir="ltr" maxlength="4" /></p>
 	<p><?php echo __('Yesterday template:', 'timeline'); ?></p>
 	<input name="formaty" style="width: 400px" type="text" value="<?php echo htmlspecialchars(stripslashes(get_option('timeline_formaty'))); ?>" dir="ltr" />
     <p><?php echo __('Today template:', 'timeline'); ?></p>
@@ -432,13 +440,32 @@ function maketimeline($day = 'cycle', $month = 'cycle', $format = '', $empty = '
            echo $format;
         }
     } else {
-        $format = str_replace("%event%", stripslashes($load->event), $format);
+        if (get_option('timeline_excerpt') == '1' and strlen(stripslashes($load->event)) >= get_option('timeline_excerptch')) {
+            $newtx = '<span id="tc1'.$day.'">'.substr(stripslashes($load->event), 0, get_option('timeline_excerptch')) . ' <a href="javascript:timeline(\'tc2'.$day.'\', \'tc1'.$day.'\');">'.__('Continue...', 'timeline').'</a></span><span style="display: none" id="tc2'.$day.'">' . stripslashes($load->event).'</span>';
+        } else {
+            $newtx = stripslashes($load->event);
+        }
+        $format = str_replace("%event%", $newtx, $format);
         if (get_option('timeline_break') == '1') {
            $format = str_replace("\n", "<br />", $format);
         }
         echo $format;
     }
     
+}
+
+function add_timelinescript() {
+   echo '
+<!-- Timeline Script -->
+<script type="text/javascript">
+function timeline(t1, t2) {
+    document.getElementById(t1).style.display = "block";
+   	document.getElementById(t2).style.display = "none";
+}
+</script>
+<!-- Timeline Script -->
+
+';
 }
 
 function uninstall_page()
@@ -448,5 +475,6 @@ function uninstall_page()
 
 add_action('widgets_init', create_function('', 'return register_widget("TimelinecalWidget");'));
 add_action('admin_menu', 'timeline_menu');
+add_action('wp_head', 'add_timelinescript');
 load_plugin_textdomain('timeline', "/wp-content/plugins/timeline-calendar/");
 ?>

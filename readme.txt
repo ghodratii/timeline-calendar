@@ -3,8 +3,8 @@ Contributors: omidkorat
 Donate link: http://www.dementor.ir
 Tags: timeline, calendar, event, widget
 Requires at least: 3
-Tested up to: 3.0.4
-Stable tag: 1.0.2
+Tested up to: 3.2
+Stable tag: 1.0.3
 
 A plugin for make your own timeline calendar with lots of options.
 
@@ -50,6 +50,10 @@ Log into WordPress and go to Timeline\Timeline.
 
 
 == Changelog ==
+
+= 1.0.3 =
+* Added an option for displaying an excerpt instead of full event text.
+* Added an option for specify character  limit for excerpt.
 
 = 1.0.2 =
 * Added an option for converting line breaks to paragraph.
