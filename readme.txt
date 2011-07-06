@@ -4,7 +4,7 @@ Donate link: http://www.dementor.ir
 Tags: timeline, calendar, event, widget
 Requires at least: 3
 Tested up to: 3.2
-Stable tag: 1.0.3
+Stable tag: 1.1
 
 A plugin for make your own timeline calendar with lots of options.
 
@@ -51,6 +51,14 @@ Log into WordPress and go to Timeline\Timeline.
 
 == Changelog ==
 
+= 1.1 =
+* Auto enable of Jalali Calendar when wp-jalali is enable.
+* Display correct form of Farsi numbers when converting number has been enable in wp-jalali.
+* Fix empty displaying of calendar when no record found for three days or today.
+* From now, if display method has been set on today, "Hide empty days" feature will not work anymore.
+* Fix removing new options on uninstall page.
+* Translations for English has been updated.
+
 = 1.0.3 =
 * Added an option for displaying an excerpt instead of full event text.
 * Added an option for specify character  limit for excerpt.
@@ -68,6 +76,6 @@ Log into WordPress and go to Timeline\Timeline.
 
 == Upgrade Notice ==
 
-= 1.0.3 =
+= 1.1 =
 * Added an option for displaying an excerpt instead of full event text.
 * Added an option for specify character  limit for excerpt.

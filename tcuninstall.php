@@ -1,5 +1,5 @@
 <?php global $wpdb;
-$tc_settings = array('timeline_empty', 'timeline_hidempty', 'timeline_formaty', 'timeline_format', 'timeline_formatt', 'timeline_days', 'timeline_jalali', 'timeline_break');
+$tc_settings = array('timeline_empty', 'timeline_hidempty', 'timeline_formaty', 'timeline_format', 'timeline_formatt', 'timeline_days', 'timeline_jalali', 'timeline_break', 'timeline_excerpt', 'timeline_excerptch');
 ?>
 <div class='wrap'>
 <form name="frmtimelineun" method="post" action="">
