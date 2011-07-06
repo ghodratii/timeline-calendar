@@ -77,5 +77,4 @@ Log into WordPress and go to Timeline\Timeline.
 == Upgrade Notice ==
 
 = 1.1 =
-* Added an option for displaying an excerpt instead of full event text.
-* Added an option for specify character  limit for excerpt.
+Add new features for Jalali and Persian language, fix bugs and...
