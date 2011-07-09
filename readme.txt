@@ -80,5 +80,5 @@ Log into WordPress and go to Timeline\Timeline.
 
 == Upgrade Notice ==
 
-= 1.1 =
-Add new features for Jalali and Persian language, fix bugs and...
+= 1.1.1 =
+Fix all HTML rendering.
