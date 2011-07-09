@@ -54,6 +54,8 @@ Log into WordPress and go to Timeline\Timeline.
 = 1.1.1 =
 * Fix HTML rendering in widget and PHP code.
 * Fix HTML rendering in Events page.
+* Change the width and height of text box in Events page.
+* Update Persian language.
 
 = 1.1 =
 * Auto enable of Jalali Calendar when wp-jalali is enable.
