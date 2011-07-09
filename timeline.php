@@ -3,7 +3,7 @@
 Plugin Name: Timeline Calendar
 Plugin URI: 
 Description: Make your own timeline calendar with many options!
-Version: 1.1
+Version: 1.1.1
 Author: Omid Korat
 Author URI: http://dementor.ir/
 */
@@ -322,7 +322,7 @@ function events_page()
             }
         } } ?>
 	</select><br />
-	<?php echo __('This event happens:', 'timeline'); ?> <br /><textarea cols="30" rows="4" name="event" id="event"><?php echo stripslashes($ee); ?></textarea>
+	<?php echo __('This event happens:', 'timeline'); ?> <br /><textarea cols="30" rows="4" name="event" id="event" style="width: 500px; height: 200px;"><?php echo stripslashes($ee); ?></textarea>
     <p style="font-style: italic;"><small><?php echo __('You can use HTML codes.', 'timeline'); ?></small></p>
     <?php if ($ee != '') { ?>
     <input type="hidden" id="timeline_edit" name="timeline_edit" />
@@ -364,7 +364,7 @@ function events_page()
         
             <tr>
             		<td valign="top"><?php if (checkjalali() and get_option('timeline_jalali') != '0') { echo $d.' '.$jmonth[(int)$m]; } else { echo $d.' '.$gmonth[(int)$m]; } ?></td>
-            		<td valign="top"><?php echo ($event->event); ?></td>
+            		<td valign="top"><?php echo stripslashes(htmlspecialchars_decode($event->event)); ?></td>
             		<td valign="top"><a href="<?php echo get_admin_url().'admin.php?page=events&amp;edit=' . $event->id; ?>"><?php echo __('Edit', 'timeline'); ?></a>&nbsp;&nbsp;<a href="<?php echo get_admin_url() .
 'admin.php?page=events&amp;delete=' . $event->id; ?>" onclick="javascript:return confirm('<?php echo __('Are you sure?', 'timeline'); ?>')"><?php echo __('Delete', 'timeline'); ?></a></td>
            	</tr>
@@ -463,7 +463,7 @@ function maketimeline($day = 'cycle', $month = 'cycle', $format = '', $empty = '
            echo $format;
         }
     } else {
-        $newtx = stripslashes($load->event);
+        $newtx = stripslashes(htmlspecialchars_decode($load->event));
         if (defined('MPS_JD_OPTIONS_NAME')) {
         $mps_jd_optionsDB = get_option(MPS_JD_OPTIONS_NAME);
         $mps_jd_farsinum_content = $mps_jd_optionsDB['mps_jd_farsinum_content'];
