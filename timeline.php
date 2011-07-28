@@ -470,7 +470,7 @@ function maketimeline($day = 'cycle', $month = 'cycle', $format = '', $empty = '
             if ($mps_jd_farsinum_content==true) $newtx = farsi_num($newtx);
         }
         if (get_option('timeline_excerpt') == '1' and strlen(stripslashes($load->event)) >= get_option('timeline_excerptch')) {
-            $newtx = '<span id="tc1'.$day.'">'.substr(stripslashes($load->event), 0, get_option('timeline_excerptch')) . ' <a href="javascript:timeline(\'tc2'.$day.'\', \'tc1'.$day.'\');">'.__('Continue...', 'timeline').'</a></span><span style="display: none" id="tc2'.$day.'">' . stripslashes($load->event).'</span>';
+            $newtx = '<span id="tc1'.$day.'">'.substr(stripslashes(htmlspecialchars_decode($load->event)), 0, get_option('timeline_excerptch')) . ' <a href="javascript:timeline(\'tc2'.$day.'\', \'tc1'.$day.'\');">'.__('Continue...', 'timeline').'</a></span><span style="display: none" id="tc2'.$day.'">' . stripslashes(htmlspecialchars_decode($load->event)).'</span>';
         }
         $format = str_replace("%event%", $newtx, $format);
         if (get_option('timeline_break') == '1') {

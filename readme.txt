@@ -4,7 +4,7 @@ Donate link: http://www.dementor.ir
 Tags: timeline, calendar, event, widget
 Requires at least: 3
 Tested up to: 3.2
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 
 A plugin for make your own timeline calendar with lots of options.
 
@@ -51,11 +51,13 @@ Log into WordPress and go to Timeline\Timeline.
 
 == Changelog ==
 
+= 1.1.2 =
+* Fix HTML rendering in excerpt mode.
+* Translations for Persian has been updated.
+
 = 1.1.1 =
 * Fix HTML rendering in widget and PHP code.
 * Fix HTML rendering in Events page.
-* Change the width and height of text box in Events page.
-* Update Persian language.
 
 = 1.1 =
 * Auto enable of Jalali Calendar when wp-jalali is enable.
@@ -79,8 +81,3 @@ Log into WordPress and go to Timeline\Timeline.
 
 = 1.0 =
 * First release.
-
-== Upgrade Notice ==
-
-= 1.1.1 =
-Fix all HTML rendering.
