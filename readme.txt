@@ -4,7 +4,7 @@ Donate link: http://www.dementor.ir
 Tags: timeline, calendar, event, widget
 Requires at least: 3
 Tested up to: 3.2
-Stable tag: 1.1.2
+Stable tag: 1.2
 
 A plugin for make your own timeline calendar with lots of options.
 
@@ -18,6 +18,7 @@ This plugin has been made based on standard and Hijri Shamsi calendar.
 
 = Features =
 * Add, edit and delete your own events.
+* Add multiple events for one day. (NEW)
 * Totally customizable in HTML for all days.
 * Ability to hide in days with no events.
 * Ability to show event just for today or past and future days.
@@ -51,6 +52,11 @@ Log into WordPress and go to Timeline\Timeline.
 
 == Changelog ==
 
+= 1.2 =
+* Ability to add multiple events for one day.
+* Reorganize options.
+* Optimize codes.
+
 = 1.1.2 =
 * Fix HTML rendering in excerpt mode.
 * Translations for Persian has been updated.
@@ -81,3 +87,8 @@ Log into WordPress and go to Timeline\Timeline.
 
 = 1.0 =
 * First release.
+
+== Upgrade Notice ==
+
+= 1.2 =
+* Ability to add multiple events for one day.

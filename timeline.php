@@ -176,18 +176,18 @@ function timeline_handle()
 	</select></p>
     <p><label<?php if (!checkjalali(true)) echo ' style="color: gray;"'; ?>><input<?php if (!checkjalali(true)) { echo ' disabled="disabled"'; } else { if (get_option('timeline_jalali') == '1') { echo ' checked="checked"'; } } ?> name="jalali" type="checkbox" value="1" />&nbsp;<?php echo __('Use Iranian (Jalali) calendar.', 'timeline'); ?></label>&nbsp;<small style="font-style: italic;<?php if (!checkjalali(true)) echo ' color: gray;';?>">(<?php echo __('Your actual events date will not corrupt.', 'timeline'); ?>)</small></p>
     <?php if (!checkjalali(true)) echo '<p><small>'.__('In order to use this feature, you need to install the <a href="http://wordpress.org/extend/plugins/wp-jalali/">wp-jalali</a> plugin.', 'timeline').'</small></p>'; ?>
-	<p><?php echo __('Text when no records found:', 'timeline'); ?></p>
-	<input name="empty" style="width: 400px" type="text" value="<?php  echo htmlspecialchars(stripslashes(get_option('timeline_empty'))); ?>" />
     <p><label><input <?php if (get_option('timeline_hidempty') == '0') { echo 'checked="checked"'; } ?> name="hidempty" type="checkbox" value="0" />&nbsp;<?php echo __('Hide empty days.', 'timeline'); ?></label></p>
     <p><label><input <?php if (get_option('timeline_excerpt') == '1') { echo 'checked="checked"'; } ?> name="excerpt" type="checkbox" value="1" />&nbsp;<?php echo __('Display an excerpt instead of full event text.', 'timeline'); ?></label></p>
     <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo __('Character limit', 'timeline'); ?>: <input name="excerptch" style="width: 50px" type="text" value="<?php echo htmlspecialchars(stripslashes(get_option('timeline_excerptch'))); ?>" dir="ltr" maxlength="4" /></p>
+    <p><label><input <?php if (get_option('timeline_break') == '1') { echo 'checked="checked"'; } ?> name="break" type="checkbox" value="1" />&nbsp;<?php echo __('Convert line breaks to paragraph.', 'timeline'); ?></label></p>
 	<p><?php echo __('Yesterday template:', 'timeline'); ?></p>
 	<input name="formaty" style="width: 400px" type="text" value="<?php echo htmlspecialchars(stripslashes(get_option('timeline_formaty'))); ?>" dir="ltr" />
     <p><?php echo __('Today template:', 'timeline'); ?></p>
 	<input name="format" style="width: 400px" type="text" value="<?php echo htmlspecialchars(stripslashes(get_option('timeline_format'))); ?>" dir="ltr" />
     <p><?php echo __('Tomorrow template:', 'timeline'); ?></p>
 	<input name="formatt" style="width: 400px" type="text" value="<?php echo htmlspecialchars(stripslashes(get_option('timeline_formatt'))); ?>" dir="ltr" />
-    <p><label><input <?php if (get_option('timeline_break') == '1') { echo 'checked="checked"'; } ?> name="break" type="checkbox" value="1" />&nbsp;<?php echo __('Convert line breaks to paragraph.', 'timeline'); ?></label></p>
+    <p><?php echo __('Text when no records found:', 'timeline'); ?></p>
+	<input name="empty" style="width: 400px" type="text" value="<?php  echo htmlspecialchars(stripslashes(get_option('timeline_empty'))); ?>" />
     <input type="hidden" id="timeline_config" name="timeline_config" />
     <p><input name="submit" type="submit" value="<?php echo __('Save', 'timeline'); ?>" class="button-primary" /></p>
 <?php wp_nonce_field('timelinecal'); ?>
@@ -239,15 +239,10 @@ function events_page()
             if (checkjalali() and get_option('timeline_jalali') != '0') {
             list($y, $month, $day) = jalali_to_gregorian(date("Y"), $_POST['month'], $_POST['date']);
             }
-            $tcquery = $wpdb->get_var("SELECT * FROM ".TABLE_NAME." WHERE day=$day AND month=$month");
-            if (!$tcquery) {
             $eventhtml = esc_attr($_POST['event']);
             $wpdb->insert(TABLE_NAME, array('day' => $day, 'month' => $month, 'event' => $eventhtml));
             echo '<div id="message" class="updated fade"><p>' . stripslashes($_POST['event']) .
                 ' '.__('added successfully!', 'timeline').'</p></div>';
-            } else {
-            echo '<div id="message" class="error fade"><p>'.__('You already have a event for this day and month!', 'timeline').'</p></div>';
-            }
              }
         } elseif (isset($_POST['timeline_edit'])) {
             $day = $_POST['date'];
@@ -339,8 +334,6 @@ function events_page()
     </form>
     </div>
     
-
-    <?php $total = $wpdb->get_var("SELECT COUNT(*) FROM ".TABLE_NAME); ?>
         <table class="widefat" style="margin-top: 40px;">
         	<thead><tr>
         		<th>
@@ -369,7 +362,7 @@ function events_page()
 'admin.php?page=events&amp;delete=' . $event->id; ?>" onclick="javascript:return confirm('<?php echo __('Are you sure?', 'timeline'); ?>')"><?php echo __('Delete', 'timeline'); ?></a></td>
            	</tr>
             
-        <?php } if (!$total) { ?>
+        <?php } if (count($events) == 0) { ?>
         <tr><td colspan="3" align="center"><strong><?php echo __('No Events Found', 'timeline'); ?></strong></td></tr>
         <?php } ?>
         </tbody></table>
@@ -429,19 +422,52 @@ function mytimeline(){
     
 }
 
-function maketimeline($day = 'cycle', $month = 'cycle', $format = '', $empty = '') {
+function maketimeline($day1 = 'cycle', $month1 = 'cycle', $format1 = '', $empty = '') {
     
     global $wpdb, $gmonth, $jmonth;
     checktimeline();
     
-    if ($format == '') $format = stripslashes(get_option('timeline_format'));
+    if ($format1 == '') $format1 = stripslashes(get_option('timeline_format'));
     if ($empty == '') $empty = stripslashes(get_option('timeline_empty'));
-    if ($day == 'cycle' or $month == 'cycle') { mytimeline(); return false; }
+    if ($day1 == 'cycle' or $month1 == 'cycle') { mytimeline(); return false; }
     
-    $load = $wpdb->get_row("SELECT event
-    FROM ".TABLE_NAME."
-    WHERE DAY =$day AND MONTH=$month
-    ");
+    $loads = $wpdb->get_results("SELECT event FROM ".TABLE_NAME." WHERE DAY =$day1 AND MONTH=$month1");
+    
+    foreach ($loads as $load) {
+    
+        $format = timeline_dm($day1, $month1, $format1);
+        $newtx = stripslashes(htmlspecialchars_decode($load->event));
+        
+        if (defined('MPS_JD_OPTIONS_NAME')) { //farsi sazie numbers
+            $mps_jd_optionsDB = get_option(MPS_JD_OPTIONS_NAME);
+            $mps_jd_farsinum_content = $mps_jd_optionsDB['mps_jd_farsinum_content'];
+                if ($mps_jd_farsinum_content==true) $newtx = farsi_num($newtx);
+        }
+    
+        if (get_option('timeline_excerpt') == '1' and strlen(stripslashes($load->event)) >= get_option('timeline_excerptch')) {
+            $newtx = '<span id="tc1'.$day.'">'.substr(stripslashes(htmlspecialchars_decode($load->event)), 0, get_option('timeline_excerptch')) . ' <a href="javascript:timeline(\'tc2'.$day.'\', \'tc1'.$day.'\');">'.__('Continue...', 'timeline').'</a></span><span style="display: none" id="tc2'.$day.'">' . stripslashes(htmlspecialchars_decode($load->event)).'</span>';
+        }
+        $format = str_replace("%event%", $newtx, $format);
+        if (get_option('timeline_break') == '1') {
+               $format = str_replace("\n", "<br />", $format);
+        }
+            echo $format;
+     }
+
+    if (count($loads) == 0) { //baraye namayesh ya adame namayesh rooze khaali
+        
+        $format = timeline_dm($day1, $month1, $format1);
+        $format = str_replace("%event%", $empty, $format);
+        if (get_option('timeline_hidempty') == '' or $empty == 'hide') {
+           echo $format;
+        }
+    }
+    
+}
+
+function timeline_dm($day, $month, $format) { //baraye tabdil %day% va %month% dar yek function joda
+    
+    global $wpdb, $gmonth, $jmonth;
     if (checkjalali() and get_option('timeline_jalali') != '0') {
     list($y, $month, $day) = gregorian_to_jalali(date("Y"), $month, $day);
         if (defined('MPS_JD_OPTIONS_NAME')) {
@@ -457,28 +483,8 @@ function maketimeline($day = 'cycle', $month = 'cycle', $format = '', $empty = '
     } else {
     $format = str_replace("%month%", $gmonth[$month], $format);
     }
-    if ($load->event == '') {
-        $format = str_replace("%event%", $empty, $format);
-        if (get_option('timeline_hidempty') == '' or $empty == 'hide') {
-           echo $format;
-        }
-    } else {
-        $newtx = stripslashes(htmlspecialchars_decode($load->event));
-        if (defined('MPS_JD_OPTIONS_NAME')) {
-        $mps_jd_optionsDB = get_option(MPS_JD_OPTIONS_NAME);
-        $mps_jd_farsinum_content = $mps_jd_optionsDB['mps_jd_farsinum_content'];
-            if ($mps_jd_farsinum_content==true) $newtx = farsi_num($newtx);
-        }
-        if (get_option('timeline_excerpt') == '1' and strlen(stripslashes($load->event)) >= get_option('timeline_excerptch')) {
-            $newtx = '<span id="tc1'.$day.'">'.substr(stripslashes(htmlspecialchars_decode($load->event)), 0, get_option('timeline_excerptch')) . ' <a href="javascript:timeline(\'tc2'.$day.'\', \'tc1'.$day.'\');">'.__('Continue...', 'timeline').'</a></span><span style="display: none" id="tc2'.$day.'">' . stripslashes(htmlspecialchars_decode($load->event)).'</span>';
-        }
-        $format = str_replace("%event%", $newtx, $format);
-        if (get_option('timeline_break') == '1') {
-           $format = str_replace("\n", "<br />", $format);
-        }
-        echo $format;
-    }
     
+    return $format;
 }
 
 function check_all_empty($days, $month) {
