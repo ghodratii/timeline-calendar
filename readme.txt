@@ -21,6 +21,7 @@ This plugin has been made based on standard and Hijri Shamsi calendar.
 * Add multiple events for one day. (NEW)
 * Totally customizable in HTML for all days.
 * Ability to hide in days with no events.
+* Ability to displaying an excerpt instead of full event text.
 * Ability to show event just for today or past and future days.
 * 100% compatible with وردپرس فارسی and Jalali calendar.
 * With special uninstall page.
